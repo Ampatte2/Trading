@@ -1,0 +1,26 @@
+{
+  "cwd": "/home/andrew/Trading",
+  "type": [
+    "web"
+  ],
+  "name": "Trading",
+  "framework": "svelte",
+  "template": "single-view",
+  "cssPreProcessor": false,
+  "bundler": "webpack",
+  "webpack": {
+    "developmentSourceMap": true,
+    "productionSourceMap": true,
+    "hashAssets": false,
+    "preserveAssetsPaths": false,
+    "inlineAssets": true
+  },
+  "theming": {
+    "customColor": false,
+    "color": "#007aff",
+    "darkTheme": false,
+    "iconFonts": true,
+    "fillBars": false
+  },
+  "customBuild": false
+}

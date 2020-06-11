@@ -79,7 +79,7 @@
   let instrument = "btc_prices";
 
   const client = new ApolloClient({
-		uri: `http://157.245.191.138:8080/v1alpha1/graphql`,
+		uri: `http://157.245.191.138:8080/v1/graphql`,
 		onError: ({ networkError, graphQLErrors}) =>{
 			console.log('graphQLErrors', graphQLErrors);
 			console.log('networkError', networkError);

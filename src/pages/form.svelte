@@ -12,9 +12,10 @@
       <Col width="50">
         <Button fill raised loginScreenOpen="#my-login-screen">Login Screen</Button>
       </Col>
+      
     </Row>
   </Block>
-
+<Button fill raised popupOpen="#my-popup">Popup</Button>
 
   <BlockTitle>Form Example</BlockTitle>
   <List noHairlinesMd>

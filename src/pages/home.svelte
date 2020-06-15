@@ -11,16 +11,32 @@
     <NavTitleLarge style="text-align:center">Trading</NavTitleLarge>
   </Navbar>
   <!-- Toolbar -->
+
+
   <Toolbar bottom>
     <Link>Left Link</Link>
     <Link>Right Link</Link>
   </Toolbar>
+
+
   <!-- Page content -->
-  <BlockTitle>Navigation</BlockTitle>
-  <List>
-    <ListItem link="/about/" title="About"/>
-    <ListItem link="/form/" title="Form"/>
-  </List>
+
+  <Block strong>
+    <Row>
+      <Col width="80"/>
+      {#if authenticated}
+      <Col width="10">
+        <Button fill raised on:click={()=>signOut()}>Log Out</Button>
+      </Col>
+      {:else}
+      <Col width="10">
+        <Button fill raised loginScreenOpen="#my-login-screen">Login</Button>
+      </Col>
+      {/if}
+    </Row>
+  </Block>
+
+
   <Row>
   <Col>
   <Button fill raised on:click={()=>next("crypto_prices")}>CRYPTO</Button>
@@ -33,28 +49,13 @@
   </Col>
   </Row>
   <Queries inst={instrument}/>
-
   
-
-  
-
-  <BlockTitle>Panels</BlockTitle>
-  <Block strong>
-    <Row>
-      <Col width="50">
-        <Button fill raised panelOpen="left">Left Panel</Button>
-      </Col>
-      <Col width="50">
-        <Button fill raised panelOpen="right">Right Panel</Button>
-      </Col>
-    </Row>
-  </Block>
-
-  
+  <Button on:click={()=> addToDB()}> Add to DB</Button>
 </Page>
 
 <script>
   import {
+    f7,
     Page,
     Navbar,
     NavLeft,
@@ -72,27 +73,55 @@
     Button
   } from 'framework7-svelte';
 
-  import ApolloClient from 'apollo-boost';
-  import {setClient} from 'svelte-apollo';
   import Queries from "./queries.svelte";
-  
+  import {auth, googleProvider, db} from "../js/firebase.js";
+
+  let authenticated = false;
+  let theUser;
+  auth.onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+    var displayName = user.displayName;
+    var email = user.email;
+    var emailVerified = user.emailVerified;
+    var photoURL = user.photoURL;
+    var isAnonymous = user.isAnonymous;
+    var uid = user.uid;
+    var providerData = user.providerData;
+    authenticated = true;
+    theUser = user.uid;
+    console.log(user.uid)
+    // ...
+  } else {
+    // User is signed out.
+    // ...
+    console.log("signed out")
+  }
+});
+  let signOut = () =>{
+    auth.signOut().then(function(){
+      authenticated = false;
+      f7.dialog.alert("You are logged out");
+    }).catch(function(error){
+      console.log("error", error)
+    })
+  }
+
   let instrument = "btc_prices";
-
-  const client = new ApolloClient({
-		uri: `http://157.245.191.138:8080/v1/graphql`,
-		onError: ({ networkError, graphQLErrors}) =>{
-			console.log('graphQLErrors', graphQLErrors);
-			console.log('networkError', networkError);
-		},
-		headers:{
-			"x-hasura-access-key": "Veryverysecret123"
-		}
-	});
-
-  setClient(client);
+  
+  let addToDB = () =>{
+    //if the data is not in the collection push to collection if not exit #add
+    db.collection("users").doc("mNFqAYKaxgUY7PWFuzhGnI2UwS02").get().then(res=>{
+      let nextWatchlist = res.data().watchlist
+      nextWatchlist.push("appl")
+      db.collection("users").doc(theUser).update({watchlist: nextWatchlist})      
+    })    
+  }
 
   let next =(value)=>{
     instrument = value;
   }
+  
+  
 
 </script>

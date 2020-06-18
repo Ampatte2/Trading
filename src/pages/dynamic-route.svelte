@@ -1,9 +1,4 @@
 <Page>
-
-
-  
-
-
   <Navbar title="Dynamic Route" backLink="Back" />
   <Block strong>
     <ul>

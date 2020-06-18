@@ -1,30 +1,11 @@
 <App params={ f7params } >
 
   <!-- Left panel with cover effect-->
-  <Panel left cover themeDark>
-    <View>
-      <Page>
-        <Navbar title="Left Panel"/>
-        <Block>But the other one ain't</Block>
-      </Page>
-    </View>
-  </Panel>
-
-
-  <!-- Right panel with reveal effect-->
-  <Panel right reveal themeDark>
-    <View>
-      <Page>
-        <Navbar title="Right Panel"/>
-        <Block>Right hand free</Block>
-      </Page>
-    </View>
-  </Panel>
-
-
+  
+  <Panels></Panels>
   <!-- Your main view, should have "view-main" class -->
   <View main class="safe-areas" url="/" />
-
+  
 
   <!-- Popup -->
   <Popup id="my-popup">
@@ -36,7 +17,7 @@
           </NavRight>
         </Navbar>
         <Block>
-          <p>Content is HERE!</p>
+          <p>Content is Here</p>
         </Block>
       </Page>
     </View>
@@ -71,7 +52,7 @@
         {/if}   
         <List>
           <ListButton title="Sign In" onClick={() => userHandler("login")} />
-          <ListButton title="Sign Up" onClick={() => registerToggle(true)} />
+          <ListButton title="Sign Up" onClick={() => register=!register} />
         </List>
         {:else}
         <LoginScreenTitle>Register</LoginScreenTitle>
@@ -105,11 +86,11 @@
         {/if}   
         <List>
           <ListButton title="Register" onClick={() => userHandler("register")} />
-          <ListButton title="Sign In" onClick={() => registerToggle(false)} />
+          <ListButton title="Sign In" onClick={() => register=!register} />
         </List>
         {/if}
              
-
+        
         <BlockFooter>
           Some text about login information.<br />Click "Sign In" to close Login Screen
         </BlockFooter>
@@ -119,37 +100,30 @@
 </App>
 <script>
   import { onMount } from 'svelte';
-
-  import {
-    f7,
-    f7ready,
-    App,
-    Panel,
-    Views,
-    View,
-    Popup,
-    Page,
-    Navbar,
-    Toolbar,
-    NavRight,
-    Link,
-    Block,
-    BlockTitle,
-    LoginScreen,
-    LoginScreenTitle,
-    List,
-    ListItem,
-    ListInput,
-    ListButton,
-    BlockFooter
-  } from 'framework7-svelte';
+  import {f7,f7ready,App,Button,Panel,Views,View,
+    Popup,Page,Navbar,Toolbar,NavRight,
+    Link,Block,BlockTitle,LoginScreen,
+    LoginScreenTitle,List,ListItem,
+    ListInput,ListButton,BlockFooter} from 'framework7-svelte';
   import ApolloClient from 'apollo-boost';
   import {setClient} from 'svelte-apollo';
   import {auth, googleProvider, db} from "../js/firebase.js";
+  import Panels from './panels'
   import routes from '../js/routes';
+  let f7params = {
+    name: 'Trading', // App name
+    theme: 'auto', // Automatic theme detection
+    // App routes
+    routes: routes,
+  };
+  let email = '';
+  let password = '';
+  let repeatPassword = '';
+  let register = false;
+  let error = false;
 
   const client = new ApolloClient({
-        uri: `http://157.245.191.138:8080/v1/graphql`,
+        uri: `https://webdevtests.com/v1/graphql`,
         onError: ({ networkError, graphQLErrors}) =>{
           console.log('graphQLErrors', graphQLErrors);
           console.log('networkError', networkError);
@@ -158,25 +132,9 @@
           "x-hasura-access-key": process.env.HASURA_ACCESS_KEY
     }
   });
-  
   setClient(client);
-  // Framework7 Parameters
-  let f7params = {
-    name: 'Trading', // App name
-    theme: 'auto', // Automatic theme detection
-    // App routes
-    routes: routes,
-  };
-  // Login screen demo data
-  let email = '';
-  let password = '';
-  let repeatPassword = '';
-  let register = false;
-  let error = false;
-  
 
-  function userHandler(value) {
-    
+  let userHandler =(value)=> {
     if(value==="login"){
         auth.signInWithEmailAndPassword(email, password).catch(function(error) {
         return error;
@@ -188,9 +146,7 @@
           f7.loginScreen.close();
         }
       })
-      
     }
-
     if(value==="register"){
       auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
         return error;
@@ -204,9 +160,7 @@
       })
     }
   }
-  function registerToggle(value){
-    register = value
-  }
+  
       // Call F7 APIs here
   onMount(() => {
     let options = {

@@ -3,6 +3,7 @@
   <!-- Left panel with cover effect-->
   
   <Panels></Panels>
+  
   <!-- Your main view, should have "view-main" class -->
   <View main class="safe-areas" url="/" />
   

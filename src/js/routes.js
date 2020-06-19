@@ -12,7 +12,7 @@ import NotFoundPage from '../pages/404.svelte';
 var routes = [
   {
     path: '/',
-    component: HomePage,
+    component: Dashboard,
   },
   {
     path: '/about/',

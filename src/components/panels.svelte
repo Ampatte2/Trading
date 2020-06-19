@@ -1,5 +1,5 @@
 
-<Panel left cover themeDark>
+<Panel left cover themeDark swipe>
     <View>
       <Page>
         <Navbar title="Left Panel"/>
@@ -7,7 +7,7 @@
       </Page>
     </View>
   </Panel>
-  <Panel right reveal themeDark>
+  <Panel right reveal themeDark swipe>
     <View>
       <Page>
         <Navbar title="Navigation"/>

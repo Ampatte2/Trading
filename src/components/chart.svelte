@@ -1,9 +1,7 @@
 
 <script>
 
-export let queryData;
-export let money;
-export let type;
+export let queryData, money, type, wdth, hgth;
 import {onMount} from 'svelte';
 import ApexCharts from "apexcharts"
 import {Block} from "framework7-svelte";
@@ -11,7 +9,7 @@ import {Block} from "framework7-svelte";
 
 let points = [];
 
-
+console.log(queryData)
 
 onMount(()=> {
   queryData[type].forEach(element => {
@@ -26,8 +24,8 @@ onMount(()=> {
         }],
           chart: {
           type: 'candlestick',
-          height: 600,
-          width:900
+          height: hgth,
+          width: wdth
         },
         title: {
           text: `${type} ${money}`,
@@ -78,7 +76,7 @@ onMount(()=> {
         }
     };
     
-    let chart = new ApexCharts(document.querySelector('#line-chart'), options);
+    let chart = new ApexCharts(document.querySelector('#candle-chart'), options);
     chart.render()
   }
 )
@@ -86,10 +84,10 @@ onMount(()=> {
 
 </script>
 <Block>
-<div id="line-chart"></div>
+<div id="candle-chart"></div>
 </Block>
 <style>
-#line-chart {
+#candle-chart {
   max-width: 50vw;
   margin: auto;
 }

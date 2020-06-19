@@ -90,22 +90,38 @@
 </Popup>
 <Page>
 
-  <Navigation></Navigation>
-  <div class="parent">
-      <div class="sml-itm">Prices</div>
+  <Navigation theview="watchlists"></Navigation>
+  
+      
       <div class="lrg-itm">
-        <div class="banner">Daily Updates</div>
-        <div class="chart"></div>
-        <Button popupOpen="#my-popup">Hello</Button>
+        <div class="banner">
+        <Link iconIos="f7:swap_vert" iconAurora="f7:swap_vert" iconMd="material:swap_vert" style="margin:2px;">Symbol</Link>
+        <Link iconIos="f7:swap_vert" iconAurora="f7:swap_vert" iconMd="material:swap_vert" style="margin:2px;">Change</Link>
+        </div>
+        <div class="watchlists">
+        {#each watchlist as item, i}
+          <div class="banner">
+          <h3>{item.name}</h3>
+          <h3>{item.symbol}</h3>
+          <LineChart queryData={dummy.data} money="USD" type="btc_prices" wdth="75px" hgth="30px" index={i}/>
+          <h3>{item.change}</h3>
+          <h3>{item.value}</h3>
+          </div>
+        {/each}
+
+        </div>
+        <Link iconIos="f7:plus" iconAurora="f7:plus" iconMd="f7:plus" popupOpen="#my-popup" style="margin-left:5vw;">Add Symbol</Link>        
       </div>
-      <div class="sml-itm">Watchlists</div>
-  </div>
+      
+
 </Page>
 <script>
  
   import { Page, Navbar, NavLeft, NavTitle, NavRight, Link, NavTitleLarge, Block, BlockTitle, Row, Col, View, Popup, Button,List, ListInput, ListItem, Range, Toggle} from 'framework7-svelte';
   import {auth, googleProvider, db} from "../js/firebase.js";
   import Navigation from "../components/navigation.svelte"
+  import LineChart from "../components/line-chart.svelte"
+  import dummy from '../js/dummy-data.js'
   let thevar= "watchlist";
   let theStock = "APPL"
   let dosomething = ()=>{
@@ -119,37 +135,25 @@
       db.collection("users").doc(theUser).update({watchlist: nextWatchlist})      
     })    
   }
+  let watchlist = [{name:"NASDAQ", symbol:"IXIC", chart:dummy.data, change: "0.2%", value:1200 }, {name:"NASDAQ", symbol:"IXIC", chart:dummy.data, change: "0.2%", value:1200 }, {name:"NASDAQ", symbol:"IXIC", chart:dummy.data, change: "0.2%", value:1200 }]
 
+  console.log(dummy.data)
 </script>
 
 <style>
-.parent{
+
+.watchlists{
   
-  height:100vh;
-  background-color:darkgrey;
-  margin:none;
+}
+
+.banner{
+  
+  justify-content: space-between;
   display:flex;
   flex-direction: row;
-  justify-content: space-between;
+  width:90vw;
+  margin:auto;
+  height:5vh;
 }
-.banner{
-  background-color: darkslateblue;
-  width:100%;
-  height:10%
-}
-.chart{
-  width:100%;
-  height:50%;
-  background-color:darkslateblue;
-  margin-top:2%;
-}
-.sml-itm{
-  width:15vw;
-  height:100%;
-  background-color: red;
-}
-.lrg-itm{
-  width:65vw;
-  background-color:green;
-}
+
 </style>

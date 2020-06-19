@@ -1,7 +1,7 @@
 <Page name="home">
   <!-- Top Navbar -->
   <!-- Toolbar -->
-  <Navigation></Navigation>
+  <Navigation theview="markets"></Navigation>
   <Toolbar bottom>
     <Link>Left Link</Link>
     <Link>Right Link</Link>
@@ -43,7 +43,7 @@
     Button
   } from 'framework7-svelte';
   import Navigation from "../components/navigation.svelte"
-  import Queries from "./queries.svelte";
+  import Queries from "../components/queries.svelte";
   import {auth, googleProvider, db} from "../js/firebase.js";
   console.log("home")
   let instrument = "btc_prices";

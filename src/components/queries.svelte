@@ -25,7 +25,7 @@
     </form>
     {/if}
     </Block>
-    <Chart queryData={data.data} money={currency} type={inst}/>
+    <Chart queryData={data.data} money={currency} type={inst} wdth={600} hgth={900}/>
     <Row style="width:50vw;margin:auto">
     <Button fill raised on:click={()=>next(-100)} disabled={index===0}>Previous 100 Days</Button>
     

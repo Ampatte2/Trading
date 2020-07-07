@@ -124,7 +124,7 @@
   let error = false;
 
   const client = new ApolloClient({
-        uri: `https://webdevtests.com/v1/graphql`,
+        uri: ``,
         onError: ({ networkError, graphQLErrors}) =>{
           console.log('graphQLErrors', graphQLErrors);
           console.log('networkError', networkError);

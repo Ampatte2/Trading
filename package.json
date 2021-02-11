@@ -21,7 +21,7 @@
     "Samsung >= 5"
   ],
   "dependencies": {
-    "apexcharts": "^3.19.2",
+    "apexcharts": "^3.24.0",
     "apollo-boost": "^0.4.9",
     "dom7": "^2.1.5",
     "firebase": "^7.15.1",

@@ -31,7 +31,7 @@
     "graphql": "^15.0.0",
     "rxfire": "^3.13.1",
     "rxjs": "^6.5.5",
-    "svelte": "^3.23.0",
+    "svelte": "^3.49.0",
     "svelte-apollo": "^0.3.0",
     "template7": "^1.4.2"
   },
